@@ -69,9 +69,10 @@ function autoMine() {
 function clickMine(coin) {
    coins[coin].owned += clickRate * coins[coin].coinRate
    drawCount()
+   drawRates()
 }
 
-function upgrade(item) {
+function clickUpgrade(item) {
    console.log('upgrade:', item, upgrades[item].owned)
    let upgrade = upgrades[item]
    upgrade.owned += 1
@@ -79,6 +80,7 @@ function upgrade(item) {
    upgrade.price = upgrade.price.toFixed(2)
    updateRates(item)
    drawUpgrade(item)
+   drawRates()
 }
 
 function updateRates(item) {
@@ -95,7 +97,7 @@ function generateButtons() {
       <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
       <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
       <p>${upgrades[key].desc}</p>
-      <button type="button" class="btn btn-primary" style="max-width: 30%;" onclick="upgrade('${key}')">BUY</button>
+      <button type="button" class="btn btn-primary" style="max-width: 30%;" onclick="clickUpgrade('${key}')">BUY</button>
    </div>`
    }
 }
@@ -123,6 +125,12 @@ function drawUpgrade(upgrade) {
    document.getElementById(`${upgrade}-owned`).innerText = `Owned: ${upgrades[upgrade].owned}`
 }
 
+function drawRates() {
+   document.getElementById('cpc').innerText = `Coins per Click: ${clickRate}`
+   document.getElementById('cps').innerText = `Coins per Second: ${autoRate}`
+}
+
 window.setInterval(autoMine, 1000)
 generateButtons()
 drawButtons()
+drawRates()
