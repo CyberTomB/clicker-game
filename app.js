@@ -1,6 +1,20 @@
-var btc = 0
-var clickRate = 1
-var autoRate = 0
+const coins = {
+   BTC: {
+      name: 'BTC',
+      owned: 0,
+      coinRate: 1
+   },
+   DOGE: {
+      name: 'DOGE',
+      owned: 0,
+      coinRate: 10
+   },
+   ETH: {
+      name: 'ETH',
+      owned: 0,
+      coinRate: 2
+   }
+}
 
 const upgrades = {
    GPU: {
@@ -8,85 +22,98 @@ const upgrades = {
       change: 1,
       priceMultiplier: 0.02,
       owned: 0,
-      type: 'click-increment'
+      auto: false,
+      button: '',
+      desc: 'Increases your base clickrate by 1'
    },
    RAM: {
       price: 500,
-      change: 0.01,
+      change: 5,
       priceMultiplier: 0.03,
       owned: 0,
-      type: 'click-percentage'
+      auto: false,
+      button: '',
+      desc: 'Increases your base clickrate by 5.'
    },
    Rig: {
       price: 800,
       change: 1,
       priceMultiplier: 0.05,
       owned: 0,
-      type: 'auto'
+      auto: true,
+      button: '',
+      desc: 'Increases your base mining rate by 1.'
    },
    Server: {
       price: 1200,
       change: 10,
       priceMultiplier: 0.07,
       owned: 0,
-      type: 'auto'
+      auto: true,
+      button: '',
+      desc: 'Increases your base mining rate by 10.'
    }
 }
 
-function miningMath(item) {
-   let upgrade = upgrades[item]
-   console.log('clickrate before:', clickRate)
-   if (upgrade.type == 'click-increment') {
-      clickRate += upgrade.change
-   } else if (upgrade.type == 'click-percentage') {
-      console.log('increment expected:', upgrade.change * autoRate)
-      clickRate += autoRate * upgrade.change
-   }
-   else {
-      autoRate += upgrade.change
-   }
-   console.log('clickrate: ', clickRate)
-   console.log('ram change: ', upgrades.RAM.change)
-}
-
-
-function mine(coin) {
-   btc += clickRate
-   console.log('clickrate: ', clickRate)
-   drawBTC()
-}
-
-window.setInterval(autoMine, 1000)
+var clickRate = 1
+var autoRate = 0
+var activeCoin = coins.BTC
 
 function autoMine() {
-   btc += autoRate
-   console.log(autoRate)
-   drawBTC()
+   activeCoin.owned += autoRate
+   drawCount()
+   console.log('the autorate:', autoRate)
+   console.log('active coin: ', activeCoin.name, 'owned: ', activeCoin.owned)
+}
+
+function clickMine(coin) {
+   coins[coin].owned += clickRate * coins[coin].coinRate
+   drawCount()
 }
 
 function upgrade(item) {
    upgrades[item].owned += 1
+   updateRates(item)
    console.log('upgrade:', item, upgrades[item].owned)
-   miningMath(item)
 }
 
-function drawBTC() {
-   document.getElementById('btc-count').innerText = `BTC: ${btc}`
-   document.getElementById('cpc').innerText = `Coins per Click: ${clickRate}`
-   document.getElementById('cps').innerText = `Coins per Second: ${autoRate}`
+function updateRates(item) {
+   if (upgrades[item].auto) {
+      autoRate += upgrades[item].change
+   } clickRate += upgrades[item].change
+}
+
+function generateButtons() {
+   for (let key in upgrades) {
+      upgrades[key].button =
+         `<div class="col-12 card bg-secondary" id="${key}">
+      <h4>${key}</h4>
+      <h6>Price: ${upgrades[key].price}</h6>
+      <h6>Owned: ${upgrades[key].owned}</h6>
+      <p>${upgrades[key].desc}</p>
+      <button type="button" class="btn btn-primary" style="max-width: 30%;" onclick="upgrade('${key}')">BUY</button>
+   </div>`
+   }
 }
 
 function drawButtons() {
    let clickTemplate = ''
    let autoTemplate = ''
    for (let key in upgrades) {
-      let btnText = key.toUpperCase()
-      if (upgrades[key].type == 'click-increment' || upgrades[key].type == 'click-percentage') {
-         clickTemplate += `<button class="btn btn-secondary" onclick="upgrade('${key}')">${btnText}</button>`
-      } else { autoTemplate += `<button class="btn btn-secondary" onclick="upgrade('${key}')">${btnText}</button>` }
+      if (upgrades[key].auto) {
+         autoTemplate += upgrades[key].button
+      } else {
+         clickTemplate += upgrades[key].button
+      }
+      document.getElementById('click-upgrades').innerHTML = clickTemplate
+      document.getElementById('auto-upgrades').innerHTML = autoTemplate
    }
-   document.getElementById('click-buttons').innerHTML = clickTemplate
-   document.getElementById('auto-buttons').innerHTML = autoTemplate
 }
 
+function drawCount(coin) {
+   document.getElementById('btc-count').innerText = `BTC: ${activeCoin.owned}`
+}
+
+window.setInterval(autoMine, 1000)
+generateButtons()
 drawButtons()

@@ -41,17 +41,27 @@
          </div>
       </div>
       <div class="row justify-content-center">
-         <button class="col-6 btn btn-primary" onclick="mine()">BTC</button>
+         <button class="col-6 btn btn-primary" onclick="clickMine('BTC')">BTC</button>
       </div>
       <div class="row">
          <h1 class="col text-center" id="btc-count">BTC: 0</h1>
       </div>
       <div class="row justify-content-between">
-         <div class="col-4" id="click-buttons">
-            <button class="btn btn-secondary">GPU</button>
+         <div class="col-4">
+            <div class="row" id="click-upgrades">
+               <div class="col-12 card bg-secondary">
+                  <h4>GPU</h4>
+                  <h6>Price: 100</h6>
+                  <h6>Owned: 0</h6>
+                  <p>Increases your base clickrate by 1</p>
+                  <button type="button" class="btn btn-primary" style="max-width: 30%;">BUY</button>
+               </div>
+            </div>
          </div>
-         <div class="col-4" id="auto-buttons">
-            <button class="btn btn-secondary">Rig</button>
+         <div class="col-4">
+            <div class="row" id="auto-upgrades">
+               <!-- auto upgrades buttons drawn here -->
+            </div>
          </div>
       </div>
 
