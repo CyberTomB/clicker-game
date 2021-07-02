@@ -20,7 +20,7 @@ const upgrades = {
    GPU: {
       price: 100,
       change: 1,
-      priceMultiplier: 0.02,
+      priceMultiplier: 1.02,
       owned: 0,
       auto: false,
       button: '',
@@ -29,7 +29,7 @@ const upgrades = {
    RAM: {
       price: 500,
       change: 5,
-      priceMultiplier: 0.03,
+      priceMultiplier: 1.03,
       owned: 0,
       auto: false,
       button: '',
@@ -38,7 +38,7 @@ const upgrades = {
    Rig: {
       price: 800,
       change: 1,
-      priceMultiplier: 0.05,
+      priceMultiplier: 1.05,
       owned: 0,
       auto: true,
       button: '',
@@ -47,7 +47,7 @@ const upgrades = {
    Server: {
       price: 1200,
       change: 10,
-      priceMultiplier: 0.07,
+      priceMultiplier: 1.07,
       owned: 0,
       auto: true,
       button: '',
@@ -72,9 +72,13 @@ function clickMine(coin) {
 }
 
 function upgrade(item) {
-   upgrades[item].owned += 1
-   updateRates(item)
    console.log('upgrade:', item, upgrades[item].owned)
+   let upgrade = upgrades[item]
+   upgrade.owned += 1
+   upgrade.price *= upgrade.priceMultiplier
+   upgrade.price = upgrade.price.toFixed(2)
+   updateRates(item)
+   drawUpgrade(item)
 }
 
 function updateRates(item) {
@@ -88,8 +92,8 @@ function generateButtons() {
       upgrades[key].button =
          `<div class="col-12 card bg-secondary" id="${key}">
       <h4>${key}</h4>
-      <h6>Price: ${upgrades[key].price}</h6>
-      <h6>Owned: ${upgrades[key].owned}</h6>
+      <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
+      <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
       <p>${upgrades[key].desc}</p>
       <button type="button" class="btn btn-primary" style="max-width: 30%;" onclick="upgrade('${key}')">BUY</button>
    </div>`
@@ -110,8 +114,13 @@ function drawButtons() {
    }
 }
 
-function drawCount(coin) {
+function drawCount(item) {
    document.getElementById('btc-count').innerText = `BTC: ${activeCoin.owned}`
+}
+
+function drawUpgrade(upgrade) {
+   document.getElementById(`${upgrade}-price`).innerText = `Price: $${upgrades[upgrade].price}`
+   document.getElementById(`${upgrade}-owned`).innerText = `Owned: ${upgrades[upgrade].owned}`
 }
 
 window.setInterval(autoMine, 1000)
