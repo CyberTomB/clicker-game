@@ -1,5 +1,4 @@
 var btc = 0
-var btcPerSecond = 0
 var clickRate = 1
 var autoRate = 0
 
@@ -9,14 +8,14 @@ const upgrades = {
       change: 1,
       priceMultiplier: 0.02,
       owned: 0,
-      type: 'click'
+      type: 'click-increment'
    },
    RAM: {
       price: 500,
-      change: 0.01 * btcPerSecond,
+      change: 0.01,
       priceMultiplier: 0.03,
       owned: 0,
-      type: 'click'
+      type: 'click-percentage'
    },
    Rig: {
       price: 800,
@@ -36,19 +35,33 @@ const upgrades = {
 
 function miningMath(item) {
    let upgrade = upgrades[item]
-   console.log(upgrade)
-   if (upgrade.type == 'click') {
-      clickRate += upgrade.owned * upgrade.change
-      console.log('upgrade change', upgrade.change)
-      console.log('new clickrate', clickRate)
+   console.log('clickrate before:', clickRate)
+   if (upgrade.type == 'click-increment') {
+      clickRate += upgrade.change
+   } else if (upgrade.type == 'click-percentage') {
+      console.log('increment expected:', upgrade.change * autoRate)
+      clickRate += autoRate * upgrade.change
    }
+   else {
+      autoRate += upgrade.change
+   }
+   console.log('clickrate: ', clickRate)
+   console.log('ram change: ', upgrades.RAM.change)
 }
 
 
 function mine(coin) {
    btc += clickRate
+   console.log('clickrate: ', clickRate)
+   drawBTC()
+}
 
-   update()
+window.setInterval(autoMine, 1000)
+
+function autoMine() {
+   btc += autoRate
+   console.log(autoRate)
+   drawBTC()
 }
 
 function upgrade(item) {
@@ -57,12 +70,10 @@ function upgrade(item) {
    miningMath(item)
 }
 
-function update() {
-   drawBTC()
-}
-
 function drawBTC() {
    document.getElementById('btc-count').innerText = `BTC: ${btc}`
+   document.getElementById('cpc').innerText = `Coins per Click: ${clickRate}`
+   document.getElementById('cps').innerText = `Coins per Second: ${autoRate}`
 }
 
 function drawButtons() {
@@ -70,7 +81,7 @@ function drawButtons() {
    let autoTemplate = ''
    for (let key in upgrades) {
       let btnText = key.toUpperCase()
-      if (upgrades[key].type == 'click') {
+      if (upgrades[key].type == 'click-increment' || upgrades[key].type == 'click-percentage') {
          clickTemplate += `<button class="btn btn-secondary" onclick="upgrade('${key}')">${btnText}</button>`
       } else { autoTemplate += `<button class="btn btn-secondary" onclick="upgrade('${key}')">${btnText}</button>` }
    }
