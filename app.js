@@ -18,7 +18,7 @@ const coins = {
 
 const upgrades = {
    GPU: {
-      price: 100,
+      price: 10,
       change: 1,
       priceMultiplier: 1.02,
       owned: 0,
@@ -61,26 +61,27 @@ var activeCoin = coins.BTC
 
 function autoMine() {
    activeCoin.owned += autoRate
+   enableUpgrades()
    drawCount()
-   console.log('the autorate:', autoRate)
-   console.log('active coin: ', activeCoin.name, 'owned: ', activeCoin.owned)
 }
 
 function clickMine(coin) {
    coins[coin].owned += clickRate * coins[coin].coinRate
+   enableUpgrades()
    drawCount()
-   drawRates()
 }
 
 function clickUpgrade(item) {
-   console.log('upgrade:', item, upgrades[item].owned)
    let upgrade = upgrades[item]
+   activeCoin.owned -= upgrade.price
    upgrade.owned += 1
    upgrade.price *= upgrade.priceMultiplier
    upgrade.price = upgrade.price.toFixed(2)
+   enableUpgrades()
    updateRates(item)
    drawUpgrade(item)
    drawRates()
+   drawCount()
 }
 
 function updateRates(item) {
@@ -97,8 +98,18 @@ function generateButtons() {
       <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
       <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
       <p>${upgrades[key].desc}</p>
-      <button type="button" class="btn btn-primary" style="max-width: 30%;" onclick="clickUpgrade('${key}')">BUY</button>
+      <button id="${key}-buy" type="button" class="btn btn-primary" style="max-width: 30%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
    </div>`
+   }
+}
+
+function enableUpgrades() {
+   for (let key in upgrades) {
+      if (activeCoin.owned >= upgrades[key].price) {
+         document.getElementById(`${key}-buy`).disabled = false
+      } else {
+         document.getElementById(`${key}-buy`).disabled = true
+      }
    }
 }
 
