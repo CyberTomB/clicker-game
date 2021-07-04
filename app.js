@@ -63,19 +63,19 @@ const upgrades = {
 var clickRate = 1
 var autoRate = 0
 var activeCoin = coins.BTC
-var USD = 0
+var USD = 0.00
 
 
 function autoMine() {
    activeCoin.owned += autoRate
    enableUpgrades()
-   drawCount()
+   drawCount(activeCoin.name)
 }
 
 function clickMine(coin) {
    coins[coin].owned += clickRate * coins[coin].coinRate
    enableUpgrades()
-   drawCount()
+   drawCount(coin)
 }
 
 function sellCoin(coin) {
@@ -83,6 +83,7 @@ function sellCoin(coin) {
    USD += coins[coin].owned * coins[coin].marketValue
    coins[coin].owned = 0
    console.log('new dollars', USD)
+   drawCount(coin)
 }
 
 function clickUpgrade(item) {
@@ -158,8 +159,9 @@ function drawButtons() {
    }
 }
 
-function drawCount(item) {
-   document.getElementById('btc-count').innerText = `BTC: ${activeCoin.owned}`
+function drawCount(coin) {
+   document.getElementById(`${coin}-count`).innerText = `${coin}: ${coins[coin].owned}`
+   document.getElementById('usd-count').innerText = `USD: $${USD}`
 }
 
 function drawUpgrade(upgrade) {

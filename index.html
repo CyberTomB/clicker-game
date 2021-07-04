@@ -35,9 +35,9 @@
       <div class="row justify-content-end">
          <div class="col-4">
             <h3>Market Value:</h3>
-            <p id="market-BTC">BTC: $</p>
-            <p id="market-DOGE">DOGE: $ </p>
-            <p id="market-ETH">ETH: $</p>
+            <p id="market-BTC">BTC: $</p><button class="btn btn-primary" onclick="sellCoin('BTC')">SELL</button>
+            <p id="market-DOGE">DOGE: $ </p><button class="btn btn-primary" onclick="sellCoin('DOGE')">SELL</button>
+            <p id="market-ETH">ETH: $</p><button class="btn btn-primary" onclick="sellCoin('ETH')">SELL</button>
          </div>
       </div>
       <div class="row">
@@ -49,10 +49,15 @@
          </div>
       </div>
       <div class="row justify-content-center">
-         <img class="col-6 btn btn-primary" onclick="clickMine('BTC')" src="BTC.png">BTC</img>
+         <img class="col-4 btn" onclick="clickMine('BTC')" src="BTC.png"></img>
+         <img class="col-4 btn" onclick="clickMine('DOGE')" src="DOGE.png"></img>
+         <img class="col-4 btn" onclick="clickMine('ETH')" src="ETH.png"></img>
       </div>
       <div class="row">
-         <h1 class="col text-center" id="btc-count">BTC: 0</h1>
+         <h1 class="col-6 text-center" id="BTC-count">BTC: 0</h1>
+         <h1 class="col-6 text-center" id="DOGE-count">DOGE: 0</h1>
+         <h1 class="col-6 text-center" id="ETH-count">ETH: 0</h1>
+         <h1 class="col-6 text-center" id="usd-count">USD: $0</h1>
       </div>
       <div class="row justify-content-between">
          <div class="col-4">
