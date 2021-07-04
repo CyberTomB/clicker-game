@@ -65,6 +65,7 @@ var autoRate = 0
 var activeCoin = coins.BTC
 var USD = 0
 
+
 function autoMine() {
    activeCoin.owned += autoRate
    enableUpgrades()
@@ -75,6 +76,13 @@ function clickMine(coin) {
    coins[coin].owned += clickRate * coins[coin].coinRate
    enableUpgrades()
    drawCount()
+}
+
+function sellCoin(coin) {
+   console.log('coins: ', coins[coin].owned, 'marketvalue: ', coins[coin].marketValue)
+   USD += coins[coin].owned * coins[coin].marketValue
+   coins[coin].owned = 0
+   console.log('new dollars', USD)
 }
 
 function clickUpgrade(item) {
