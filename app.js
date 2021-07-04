@@ -1,23 +1,23 @@
 const coins = {
    BTC: {
       name: 'BTC',
-      owned: 0,
-      coinRate: 1,
+      owned: 0.00000000,
+      coinRate: 0.00000001,
       marketValue: 1,
       marketRate: 10
    },
    DOGE: {
       name: 'DOGE',
-      owned: 0,
-      coinRate: 10,
+      owned: 0.00000000,
+      coinRate: 0.00000010,
       marketValue: 0.01,
       marketRate: 1
 
    },
    ETH: {
       name: 'ETH',
-      owned: 0,
-      coinRate: 2,
+      owned: 0.00000000,
+      coinRate: 0.00000002,
       marketValue: 0.50,
       marketRate: 8
 
@@ -121,10 +121,8 @@ function updateMarket() {
       let rand = Math.random()
       console.log(rand)
       let marketChange = (rand * upDown) + (rand * coins[key].marketRate)
-      console.log('market chante', marketChange)
       coins[key].marketValue += marketChange
       coins[key].marketValue = Number(coins[key].marketValue.toFixed(2))
-      console.log('new market value', coins[key].marketValue)
    }
    drawMarket()
 }
@@ -168,10 +166,13 @@ function drawButtons() {
 
 function drawCount() {
    for (let key in coins) {
-      coins[key].owned = Number(coins[key].owned.toFixed(2))
-      document.getElementById(`${key}-count`).innerText = `${key}: ${coins[key].owned}`
+      coins[key].owned = Number(coins[key].owned.toFixed(8))
+      let countStr = coins[key].owned.toFixed(8)
+      console.log(countStr)
+      document.getElementById(`${key}-count`).innerText = `${key}: ${countStr}`
    }
-   USD = Number(USD.toFixed(2))
+   USD = Number(USD.toFixed(8))
+   console.log('draw count USD: ', USD)
    document.getElementById('usd-count').innerText = `USD: $${USD}`
 }
 
