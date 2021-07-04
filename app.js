@@ -72,13 +72,13 @@ var USD = 0.00
 function autoMine() {
    activeCoin.owned += autoRate
    enableUpgrades()
-   drawCount(activeCoin.name)
+   drawCount()
 }
 
 function clickMine(coin) {
    coins[coin].owned += clickRate * coins[coin].coinRate
    enableUpgrades()
-   drawCount(coin)
+   drawCount()
 }
 
 function sellCoin(coin) {
@@ -86,12 +86,12 @@ function sellCoin(coin) {
    USD += coins[coin].owned * coins[coin].marketValue
    coins[coin].owned = 0
    console.log('new dollars', USD)
-   drawCount(coin)
+   drawCount()
 }
 
 function clickUpgrade(item) {
    let upgrade = upgrades[item]
-   activeCoin.owned -= upgrade.price
+   USD -= upgrade.price
    upgrade.owned += 1
    upgrade.price *= upgrade.priceMultiplier
    upgrade.price = upgrade.price.toFixed(2)
@@ -144,7 +144,7 @@ function generateButtons() {
 
 function enableUpgrades() {
    for (let key in upgrades) {
-      if (activeCoin.owned >= upgrades[key].price) {
+      if (USD >= upgrades[key].price) {
          document.getElementById(`${key}-buy`).disabled = false
       } else {
          document.getElementById(`${key}-buy`).disabled = true
@@ -166,8 +166,12 @@ function drawButtons() {
    }
 }
 
-function drawCount(coin) {
-   document.getElementById(`${coin}-count`).innerText = `${coin}: ${coins[coin].owned}`
+function drawCount() {
+   for (let key in coins) {
+      coins[key].owned = Number(coins[key].owned.toFixed(2))
+      document.getElementById(`${key}-count`).innerText = `${key}: ${coins[key].owned}`
+   }
+   USD = Number(USD.toFixed(2))
    document.getElementById('usd-count').innerText = `USD: $${USD}`
 }
 
