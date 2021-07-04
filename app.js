@@ -10,12 +10,14 @@ const coins = {
       owned: 0,
       coinRate: 10,
       marketValue: 0.01,
+
    },
    ETH: {
       name: 'ETH',
       owned: 0,
       coinRate: 2,
       marketValue: 0.50,
+
    }
 }
 
@@ -94,6 +96,22 @@ function updateRates(item) {
    } clickRate += upgrades[item].change
 }
 
+function updateMarket() {
+   let upDown = 1
+   for (let key in coins) {
+      let rand = Math.random()
+      console.log(rand)
+      if (rand < 0.5) {
+         upDown = -1;
+      }
+      let marketChange = (rand * upDown).toFixed(2)
+      console.log('market chante', marketChange)
+      coins[key].marketValue += marketChange
+      console.log('new market value', coins[key].marketValue)
+   }
+   drawMarket()
+}
+
 function generateButtons() {
    for (let key in upgrades) {
       upgrades[key].button =
@@ -147,7 +165,7 @@ function drawRates() {
 
 function drawMarket() {
    for (let key in coins) {
-      document.getElementById(`market-${key}`).innerText = `BTC: $${coins[key].marketValue}`
+      document.getElementById(`market-${key}`).innerText = `${key}: $${coins[key].marketValue}`
    }
 }
 
