@@ -4,12 +4,14 @@ const coins = {
       owned: 0,
       coinRate: 1,
       marketValue: 1,
+      marketRate: 10
    },
    DOGE: {
       name: 'DOGE',
       owned: 0,
       coinRate: 10,
       marketValue: 0.01,
+      marketRate: 1
 
    },
    ETH: {
@@ -17,6 +19,7 @@ const coins = {
       owned: 0,
       coinRate: 2,
       marketValue: 0.50,
+      marketRate: 8
 
    }
 }
@@ -105,15 +108,19 @@ function updateRates(item) {
    } clickRate += upgrades[item].change
 }
 
+// Trying to have market direction change every 3 iterations, starting in "up" and then turning to "down"
 function updateMarket() {
    let upDown = 1
+   let generation = 0
+   generation++
+   if (generation >= 3) {
+      upDown * -1
+      generation = 0
+   }
    for (let key in coins) {
       let rand = Math.random()
       console.log(rand)
-      if (rand < 0.5) {
-         upDown = -1;
-      }
-      let marketChange = (rand * upDown) + (rand * 10)
+      let marketChange = (rand * upDown) + (rand * coins[key].marketRate)
       console.log('market chante', marketChange)
       coins[key].marketValue += marketChange
       coins[key].marketValue = Number(coins[key].marketValue.toFixed(2))
@@ -181,6 +188,7 @@ function drawMarket() {
 }
 
 window.setInterval(autoMine, 1000)
+window.setInterval(updateMarket, 10000)
 generateButtons()
 drawButtons()
 drawRates()
