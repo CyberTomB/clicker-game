@@ -104,9 +104,10 @@ function updateMarket() {
       if (rand < 0.5) {
          upDown = -1;
       }
-      let marketChange = (rand * upDown).toFixed(2)
+      let marketChange = (rand * upDown) + (rand * 10)
       console.log('market chante', marketChange)
       coins[key].marketValue += marketChange
+      coins[key].marketValue = Number(coins[key].marketValue.toFixed(2))
       console.log('new market value', coins[key].marketValue)
    }
    drawMarket()
