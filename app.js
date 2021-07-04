@@ -2,17 +2,20 @@ const coins = {
    BTC: {
       name: 'BTC',
       owned: 0,
-      coinRate: 1
+      coinRate: 1,
+      marketValue: 1,
    },
    DOGE: {
       name: 'DOGE',
       owned: 0,
-      coinRate: 10
+      coinRate: 10,
+      marketValue: 0.01,
    },
    ETH: {
       name: 'ETH',
       owned: 0,
-      coinRate: 2
+      coinRate: 2,
+      marketValue: 0.50,
    }
 }
 
@@ -58,6 +61,7 @@ const upgrades = {
 var clickRate = 1
 var autoRate = 0
 var activeCoin = coins.BTC
+var USD = 0
 
 function autoMine() {
    activeCoin.owned += autoRate
