@@ -145,7 +145,14 @@ function drawRates() {
    document.getElementById('cps').innerText = `Coins per Second: ${autoRate}`
 }
 
+function drawMarket() {
+   for (let key in coins) {
+      document.getElementById(`market-${key}`).innerText = `BTC: $${coins[key].marketValue}`
+   }
+}
+
 window.setInterval(autoMine, 1000)
 generateButtons()
 drawButtons()
 drawRates()
+drawMarket()
