@@ -67,6 +67,8 @@ var clickRate = 1
 var autoRate = 0
 var activeCoin = coins.BTC
 var USD = 0.00
+var generation = 0
+var upDown = 1
 
 
 function autoMine() {
@@ -110,11 +112,11 @@ function updateRates(item) {
 
 // Trying to have market direction change every 3 iterations, starting in "up" and then turning to "down"
 function updateMarket() {
-   let upDown = 1
-   let generation = 0
    generation++
+   console.log('generation: ', generation)
    if (generation >= 3) {
-      upDown * -1
+      upDown *= -1
+      console.log('updown:', upDown)
       generation = 0
    }
    for (let key in coins) {
@@ -168,11 +170,9 @@ function drawCount() {
    for (let key in coins) {
       coins[key].owned = Number(coins[key].owned.toFixed(8))
       let countStr = coins[key].owned.toFixed(8)
-      console.log(countStr)
       document.getElementById(`${key}-count`).innerText = `${key}: ${countStr}`
    }
    USD = Number(USD.toFixed(8))
-   console.log('draw count USD: ', USD)
    document.getElementById('usd-count').innerText = `USD: $${USD}`
 }
 
