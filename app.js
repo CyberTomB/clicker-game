@@ -114,7 +114,7 @@ function updateRates(item) {
 function updateMarket() {
    generation++
    console.log('generation: ', generation)
-   if (generation >= 3) {
+   if (generation >= 3 || (generation >= 2 && upDown == -1)) {
       upDown *= -1
       console.log('updown:', upDown)
       generation = 0
