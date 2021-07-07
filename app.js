@@ -2,23 +2,23 @@ const coins = {
    BTC: {
       name: 'BTC',
       owned: 0.00000000,
-      coinRate: 0.00000001,
-      marketValue: 1,
+      coinRate: 0.00001000,
+      marketValue: 100,
       marketRate: 10
    },
    DOGE: {
       name: 'DOGE',
       owned: 0.00000000,
-      coinRate: 0.00000010,
-      marketValue: 0.01,
+      coinRate: 0.00010000,
+      marketValue: 1.00,
       marketRate: 1
 
    },
    ETH: {
       name: 'ETH',
       owned: 0.00000000,
-      coinRate: 0.00000002,
-      marketValue: 0.50,
+      coinRate: 0.00000750,
+      marketValue: 75,
       marketRate: 8
 
    }
@@ -114,16 +114,14 @@ function updateRates(item) {
 function updateMarket() {
    generation++
    console.log('generation: ', generation)
-   if (generation >= 3 || (generation >= 2 && upDown == -1)) {
+   console.log('updown:', upDown)
+   if (generation >= 4 || (generation >= 2 && upDown == -1)) {
       upDown *= -1
-      console.log('updown:', upDown)
       generation = 0
    }
    for (let key in coins) {
       let rand = Math.random()
-      console.log(rand)
-      let marketChange = (rand * upDown) + (rand * coins[key].marketRate)
-      coins[key].marketValue += marketChange
+      coins[key].marketValue += (rand * coins[key].marketRate * upDown)
       coins[key].marketValue = Number(coins[key].marketValue.toFixed(2))
    }
    drawMarket()
@@ -193,7 +191,7 @@ function drawMarket() {
 }
 
 window.setInterval(autoMine, 1000)
-window.setInterval(updateMarket, 10000)
+window.setInterval(updateMarket, 1000)
 generateButtons()
 drawButtons()
 drawRates()
