@@ -2,14 +2,14 @@ const coins = {
    BTC: {
       name: 'BTC',
       owned: 0.00000000,
-      coinRate: 0.00001000,
+      coinRate: 0.00010000,
       marketValue: 100,
       marketRate: 10
    },
    DOGE: {
       name: 'DOGE',
       owned: 0.00000000,
-      coinRate: 0.00010000,
+      coinRate: 0.00100000,
       marketValue: 1.00,
       marketRate: 1
 
@@ -17,7 +17,7 @@ const coins = {
    ETH: {
       name: 'ETH',
       owned: 0.00000000,
-      coinRate: 0.00000750,
+      coinRate: 0.00007500,
       marketValue: 75,
       marketRate: 8
 
@@ -32,7 +32,8 @@ const upgrades = {
       owned: 0,
       auto: false,
       button: '',
-      desc: 'Increases your base clickrate by 1'
+      desc: 'Increases your base clickrate by 1',
+      icon: '<i class="mdi mdi-chip"></i>'
    },
    RAM: {
       price: 500,
@@ -41,7 +42,8 @@ const upgrades = {
       owned: 0,
       auto: false,
       button: '',
-      desc: 'Increases your base clickrate by 5.'
+      desc: 'Increases your base clickrate by 5.',
+      icon: '<i class="mdi mdi-checkerboard-plus"></i>'
    },
    Rig: {
       price: 800,
@@ -50,7 +52,8 @@ const upgrades = {
       owned: 0,
       auto: true,
       button: '',
-      desc: 'Increases your base mining rate by 1.'
+      desc: 'Increases your base mining rate by 1.',
+      icon: ''
    },
    Server: {
       price: 1200,
@@ -59,7 +62,8 @@ const upgrades = {
       owned: 0,
       auto: true,
       button: '',
-      desc: 'Increases your base mining rate by 10.'
+      desc: 'Increases your base mining rate by 10.',
+      icon: ''
    }
 }
 
@@ -100,6 +104,7 @@ function clickUpgrade(item) {
    enableUpgrades()
    updateRates(item)
    drawUpgrade(item)
+   drawRig()
    drawRates()
    drawCount()
 }
@@ -177,6 +182,23 @@ function drawCount() {
 function drawUpgrade(upgrade) {
    document.getElementById(`${upgrade}-price`).innerText = `Price: $${upgrades[upgrade].price}`
    document.getElementById(`${upgrade}-owned`).innerText = `Owned: ${upgrades[upgrade].owned}`
+}
+
+function drawRig() {
+   let template = '<h3>RIG</h3>'
+   for (let key in upgrades) {
+      let i = 0
+      innerTemplate = `${upgrades[key].icon}`
+      template += `
+      <p>${key}: </p>
+      `
+      while (i < upgrades[key].owned) {
+         template += innerTemplate
+         i++
+      }
+   }
+   console.log(template)
+   document.getElementById('rig').innerHTML = template
 }
 
 function drawRates() {
