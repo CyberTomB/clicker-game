@@ -4,14 +4,16 @@ const coins = {
       owned: 0.00000000,
       coinRate: 0.00010000,
       marketValue: 100,
-      marketRate: 10
+      marketRate: 10,
+      img: 'BTC.png'
    },
    DOGE: {
       name: 'DOGE',
       owned: 0.00000000,
       coinRate: 0.00100000,
       marketValue: 1.00,
-      marketRate: 1
+      marketRate: 1,
+      img: 'DOGE.png',
 
    },
    ETH: {
@@ -19,7 +21,8 @@ const coins = {
       owned: 0.00000000,
       coinRate: 0.00007500,
       marketValue: 75,
-      marketRate: 8
+      marketRate: 8,
+      img: 'ETH.png',
 
    }
 }
@@ -45,7 +48,7 @@ const upgrades = {
       desc: 'Increases your base clickrate by 5.',
       icon: '<i class="mdi mdi-checkerboard-plus"></i>'
    },
-   Rig: {
+   'Hard Drive': {
       price: 800,
       change: 1,
       priceMultiplier: 1.05,
@@ -53,7 +56,7 @@ const upgrades = {
       auto: true,
       button: '',
       desc: 'Increases your base mining rate by 1.',
-      icon: ''
+      icon: '<i class="mdi mdi-grid"></i>'
    },
    Server: {
       price: 1200,
@@ -63,7 +66,7 @@ const upgrades = {
       auto: true,
       button: '',
       desc: 'Increases your base mining rate by 10.',
-      icon: ''
+      icon: '<i class="mdi mdi-server"></i>'
    }
 }
 
@@ -76,7 +79,7 @@ var upDown = 1
 
 
 function autoMine() {
-   activeCoin.owned += autoRate
+   activeCoin.owned += autoRate * activeCoin.coinRate
    enableUpgrades()
    drawCount()
 }
@@ -175,7 +178,7 @@ function drawCount() {
       let countStr = coins[key].owned.toFixed(8)
       document.getElementById(`${key}-count`).innerText = `${key}: ${countStr}`
    }
-   USD = Number(USD.toFixed(8))
+   USD = Number(USD.toFixed(2))
    document.getElementById('usd-count').innerText = `USD: $${USD}`
 }
 
@@ -188,22 +191,23 @@ function drawRig() {
    let template = '<h3>RIG</h3>'
    for (let key in upgrades) {
       let i = 0
-      innerTemplate = `${upgrades[key].icon}`
-      template += `
-      <p>${key}: </p>
-      `
-      while (i < upgrades[key].owned) {
-         template += innerTemplate
-         i++
+      if (upgrades[key].owned > 0) {
+         innerTemplate = `${upgrades[key].icon}`
+         template += `
+         <p>${key}: </p>
+         `
+         while (i < upgrades[key].owned) {
+            template += innerTemplate
+            i++
+         }
       }
    }
-   console.log(template)
    document.getElementById('rig').innerHTML = template
 }
 
 function drawRates() {
-   document.getElementById('cpc').innerText = `Coins per Click: ${clickRate}`
-   document.getElementById('cps').innerText = `Coins per Second: ${autoRate}`
+   document.getElementById('cpc').innerText = `Click Multiplier: x${clickRate}`
+   document.getElementById('cps').innerText = `Mining per Second: x${autoRate}`
 }
 
 function drawMarket() {
@@ -212,9 +216,23 @@ function drawMarket() {
    }
 }
 
+function drawCoins() {
+   let template = ''
+   for (let key in coins) {
+      template +=
+         `<div class="col-4 text-center">
+            <img class="btn" onclick="clickMine('${key}')" src="${coins[key].img}"></img>
+            <h5>Mining Rate: ${coins[key].coinRate} per click.</h5>
+         </div>`
+   }
+   document.getElementById('coins').innerHTML = template
+}
+
 window.setInterval(autoMine, 1000)
 window.setInterval(updateMarket, 1000)
 generateButtons()
 drawButtons()
 drawRates()
 drawMarket()
+drawCoins()
+drawRig()
