@@ -52,14 +52,9 @@
             <h3>Market Value:</h3>
             <div>
                <p id="market-BTC">BTC: $</p>
-               <button class="btn btn-disabled btn-secondary" disabled>SELL: </button>
-               <button class="btn btn-primary" onclick="sellCoin('BTC',.10)">10%</button>
-               <button class="btn btn-primary" onclick="sellCoin('BTC',.25)">25%</button>
-               <button class="btn btn-primary" onclick="sellCoin('BTC',.50)">50%</button>
-               <button class="btn btn-primary" onclick="sellCoin('BTC', 1)">ALL</button>
+               <p id="market-DOGE">DOGE: $ </p>
+               <p id="market-ETH">ETH: $</p>
             </div>
-            <p id="market-DOGE">DOGE: $ </p><button class="btn btn-primary" onclick="sellCoin('DOGE')">SELL</button>
-            <p id="market-ETH">ETH: $</p><button class="btn btn-primary" onclick="sellCoin('ETH')">SELL</button>
          </div>
       </div>
       <div class="row">
@@ -70,18 +65,24 @@
             Coins per Second:
          </div>
       </div>
-      <div class="row justify-content-center" id="coins">
+      <div class="row" id="coins">
          <div class="col-4">
-            <img class="btn" onclick="clickMine('BTC')" src="BTC.png"></img>
-            <h5>Mining Rate: 0.0001000 per click.</h5>
+            <div class="row justify-content-center text-center">
+               <img class="btn col-12" onclick="clickMine('BTC')" src="BTC.png"></img>
+               <h5 class="col-12">Mining Rate: 0.0001000 per click.</h5>
+               <h3 class="col-12">Owned</h3>
+               <h4 class="col-9">Total Coin</h4>
+               <h4 class="col-3">Rigged</h4>
+               <button class="btn btn-primary col-3" onclick="sellCoin('BTC',.10)">10%</button>
+               <button class="btn btn-primary col-3" onclick="sellCoin('BTC',.25)">25%</button>
+               <button class="btn btn-primary col-3" onclick="sellCoin('BTC',.50)">50%</button>
+               <button class="btn btn-primary col-3" onclick="sellCoin('BTC', 1)">ALL</button>
+            </div>
          </div>
          <img class="col-4 btn" onclick="clickMine('DOGE')" src="DOGE.png"></img>
          <img class="col-4 btn" onclick="clickMine('ETH')" src="ETH.png"></img>
       </div>
-      <div class="row">
-         <h1 class="col-6 text-center" id="BTC-count">BTC: 0</h1>
-         <h1 class="col-6 text-center" id="DOGE-count">DOGE: 0</h1>
-         <h1 class="col-6 text-center" id="ETH-count">ETH: 0</h1>
+      <div class="row justify-content-between">
          <h1 class="col-6 text-center" id="usd-count">USD: $0</h1>
       </div>
       <div class="row justify-content-between">
