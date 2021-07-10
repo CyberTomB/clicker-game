@@ -50,7 +50,14 @@
          </div>
          <div class="col-4">
             <h3>Market Value:</h3>
-            <p id="market-BTC">BTC: $</p><button class="btn btn-primary" onclick="sellCoin('BTC',.10)">SELL 10%</button>
+            <div>
+               <p id="market-BTC">BTC: $</p>
+               <button class="btn btn-disabled btn-secondary" disabled>SELL: </button>
+               <button class="btn btn-primary" onclick="sellCoin('BTC',.10)">10%</button>
+               <button class="btn btn-primary" onclick="sellCoin('BTC',.25)">25%</button>
+               <button class="btn btn-primary" onclick="sellCoin('BTC',.50)">50%</button>
+               <button class="btn btn-primary" onclick="sellCoin('BTC', 1)">ALL</button>
+            </div>
             <p id="market-DOGE">DOGE: $ </p><button class="btn btn-primary" onclick="sellCoin('DOGE')">SELL</button>
             <p id="market-ETH">ETH: $</p><button class="btn btn-primary" onclick="sellCoin('ETH')">SELL</button>
          </div>
@@ -78,7 +85,7 @@
          <h1 class="col-6 text-center" id="usd-count">USD: $0</h1>
       </div>
       <div class="row justify-content-between">
-         <div class="col-4">
+         <div class="col-2">
             <div class="row" id="click-upgrades">
                <div class="col-12 card bg-secondary">
                   <h4>GPU</h4>

@@ -135,15 +135,15 @@ function updateMarket() {
    drawMarket()
 }
 
-function generateButtons() {
+function generateUpgradeButtons() {
    for (let key in upgrades) {
       upgrades[key].button =
          `<div class="col-12 card bg-secondary" id="${key}">
       <h4>${key}</h4>
       <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
       <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
-      <p>${upgrades[key].desc}</p>
-      <button id="${key}-buy" type="button" class="btn btn-primary" style="max-width: 30%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
+      <p class="small">${upgrades[key].desc}</p>
+      <button id="${key}-buy" type="button" class="btn btn-primary" style="max-width: 40%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
    </div>`
    }
 }
@@ -158,7 +158,7 @@ function enableUpgrades() {
    }
 }
 
-function drawButtons() {
+function drawUpgradeButtons() {
    let clickTemplate = ''
    let autoTemplate = ''
    for (let key in upgrades) {
@@ -207,7 +207,7 @@ function drawRig() {
 
 function drawRates() {
    document.getElementById('cpc').innerText = `Click Multiplier: x${clickRate}`
-   document.getElementById('cps').innerText = `Mining per Second: x${autoRate}`
+   document.getElementById('cps').innerText = `Mining Rate per Second: x${autoRate}`
 }
 
 function drawMarket() {
@@ -230,8 +230,8 @@ function drawCoins() {
 
 window.setInterval(autoMine, 1000)
 window.setInterval(updateMarket, 3000)
-generateButtons()
-drawButtons()
+generateUpgradeButtons()
+drawUpgradeButtons()
 drawRates()
 drawMarket()
 drawCoins()
