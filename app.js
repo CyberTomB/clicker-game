@@ -90,11 +90,11 @@ function clickMine(coin) {
    drawCount()
 }
 
-function sellCoin(coin) {
-   console.log('coins: ', coins[coin].owned, 'marketvalue: ', coins[coin].marketValue)
-   USD += coins[coin].owned * coins[coin].marketValue
-   coins[coin].owned = 0
-   console.log('new dollars', USD)
+//Accepts a string and a number, changes coins to USD based on rates
+function sellCoin(coin, percentage) {
+   let sellAmt = coins[coin].owned * percentage
+   USD += sellAmt * coins[coin].marketValue
+   coins[coin].owned -= sellAmt
    drawCount()
 }
 
@@ -229,7 +229,7 @@ function drawCoins() {
 }
 
 window.setInterval(autoMine, 1000)
-window.setInterval(updateMarket, 1000)
+window.setInterval(updateMarket, 3000)
 generateButtons()
 drawButtons()
 drawRates()
