@@ -2,7 +2,7 @@ const coins = {
    BTC: {
       name: 'BTC',
       owned: 0.00000000,
-      coinRate: 0.00010000,
+      coinRate: 0.00100000,
       marketValue: 100,
       marketRate: 10,
       img: 'BTC.png',
@@ -10,7 +10,7 @@ const coins = {
    DOGE: {
       name: 'DOGE',
       owned: 0.00000000,
-      coinRate: 0.00100000,
+      coinRate: 0.01000000,
       marketValue: 1.00,
       marketRate: 1,
       img: 'DOGE.png',
@@ -19,7 +19,7 @@ const coins = {
    ETH: {
       name: 'ETH',
       owned: 0.00000000,
-      coinRate: 0.00007500,
+      coinRate: 0.00075000,
       marketValue: 75,
       marketRate: 8,
       img: 'ETH.png',
@@ -31,7 +31,7 @@ const upgrades = {
    GPU: {
       price: 10,
       change: 1,
-      priceMultiplier: 1.02,
+      priceMultiplier: 1.15,
       owned: 0,
       auto: false,
       button: '',
@@ -39,9 +39,9 @@ const upgrades = {
       icon: '<i class="mdi mdi-chip"></i>'
    },
    RAM: {
-      price: 500,
+      price: 50,
       change: 5,
-      priceMultiplier: 1.03,
+      priceMultiplier: 1.30,
       owned: 0,
       auto: false,
       button: '',
@@ -49,7 +49,7 @@ const upgrades = {
       icon: '<i class="mdi mdi-checkerboard-plus"></i>'
    },
    'Hard Drive': {
-      price: 800,
+      price: 500,
       change: 1,
       priceMultiplier: 1.05,
       owned: 0,
@@ -59,7 +59,7 @@ const upgrades = {
       icon: '<i class="mdi mdi-grid"></i>'
    },
    Server: {
-      price: 1200,
+      price: 5000,
       change: 10,
       priceMultiplier: 1.07,
       owned: 0,
@@ -248,6 +248,7 @@ function drawCoins() {
             <div class="col-4" id="${key}-rigged">
             ${rigged}
             </div>
+            <h5 class="col-12">- SELL -</h5>
             <div class="col-12">
                <div class="row justify-content-center">
                   <button class="btn btn-primary col-md-2 m-1" onclick="sellCoin('${key}',.10)">10%</button>
