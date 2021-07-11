@@ -146,7 +146,7 @@ function generateUpgradeButtons() {
       <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
       <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
       <p class="small">${upgrades[key].desc}</p>
-      <button id="${key}-buy" type="button" class="btn btn-primary" style="max-width: 40%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
+      <button id="${key}-buy" type="button" class="btn btn-info" style="max-width: 40%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
    </div>`
    }
 }
@@ -223,27 +223,31 @@ function drawCoins() {
       coinVal = coinVal.toFixed(2)
       let riggedOn = ''
       if (coins[key].rigged) {
-         riggedOn = `<h4 class="col-3">RIG</h4>`
+         riggedOn = `<h4 class="bg-danger text-light rounded-sm p-1">ACTIVE</h4>`
       } else {
-         riggedOn = `<button class="col-3 btn btn-primary">MINE</button>`
+         riggedOn = `<button class="btn btn-success">MINE</button>`
       }
       template +=
-         `<div class="col-4" id="${coins[key].name}-card">
-         <div class="row justify-content-center text-center">
+         `<div class="col-3" id="${coins[key].name}-card">
+         <div class="row coin-card justify-content-center text-center p-3">
             <img class="btn col-12" onclick="clickMine('${key}')" src="${coins[key].img}"></img>
-            <h5 class="col-12">Mining Rate: ${coins[key].coinRate}0 per click.</h5>
+            <h5 class="col-12 text-secondary">Mining Rate: ${coins[key].coinRate}0 per click.</h5>
             <h3 class="col-12" id="${key}-coinval">${coinVal}</h3>
-            <h4 class="col-9" id="${key}-count">${coins[key].owned}</h4>
+            <h4 class="col-8 text-secondary" id="${key}-count">${coins[key].owned}</h4>
+            <div class="col-4" id="rigged">
             ${riggedOn}
+            </div>
             <div class="col-12">
                <div class="row justify-content-center">
-                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}',.10)">10%</button>
-                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}',.25)">25%</button>
-                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}',.50)">50%</button>
-                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}', 1)">ALL</button>
+                  <button class="btn btn-primary col-md-2 m-1" onclick="sellCoin('${key}',.10)">10%</button>
+                  <button class="btn btn-primary col-md-2 m-1" onclick="sellCoin('${key}',.25)">25%</button>
+                  <button class="btn btn-primary col-md-2 m-1" onclick="sellCoin('${key}',.50)">50%</button>
+                  <button class="btn btn-primary col-md-2 m-1" onclick="sellCoin('${key}', 1)">ALL</button>
                </div>
             </div>
-            <p class="col-12" id="market-${key}">${key}: $0.00</p>
+         </div>
+         <div class="row text-center">
+            <p class="col-12 bg-info text-light rounded-sm" id="market-${key}">${key}: $0.00</p>
          </div>
       </div>`
 

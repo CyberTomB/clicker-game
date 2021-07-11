@@ -7,3 +7,11 @@ body {
 main {
   flex-grow: 1;
 }
+
+.coin-card {
+  border-radius: 10px;
+  border-bottom-left-radius: 0px;
+  border-bottom-right-radius: 0px;
+  box-shadow: 0 10px 25px 5px rgba(0, 0, 0, 0.2);
+}
+
