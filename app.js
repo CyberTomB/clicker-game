@@ -6,7 +6,6 @@ const coins = {
       marketValue: 100,
       marketRate: 10,
       img: 'BTC.png',
-      rigged: true,
    },
    DOGE: {
       name: 'DOGE',
@@ -15,7 +14,6 @@ const coins = {
       marketValue: 1.00,
       marketRate: 1,
       img: 'DOGE.png',
-      rigged: false,
 
    },
    ETH: {
@@ -25,7 +23,6 @@ const coins = {
       marketValue: 75,
       marketRate: 8,
       img: 'ETH.png',
-      rigged: false,
 
    }
 }
@@ -79,6 +76,7 @@ var activeCoin = coins.BTC
 var USD = 0.00
 var generation = 0
 var upDown = 1
+var rigOn = `<h4 class="bg-danger text-light rounded-sm p-1">ACTIVE</h4>`
 
 
 function autoMine() {
@@ -87,10 +85,19 @@ function autoMine() {
    drawCount()
 }
 
-function clickMine(coin) {
+function clickCoin(coin) {
    coins[coin].owned += clickRate * coins[coin].coinRate
    enableUpgrades()
    drawCount()
+}
+
+function clickMine(coin) {
+   console.log('prior active coin: ', activeCoin)
+
+   document.getElementById(`${activeCoin.name}-rigged`).innerHTML = `<button class="btn btn-success" onclick="clickMine('${activeCoin.name}')">MINE</button>`
+   activeCoin = coins[coin]
+   console.log('new active coin: ', activeCoin)
+   document.getElementById(`${coin}-rigged`).innerHTML = rigOn
 }
 
 //Accepts a string and a number, changes coins to USD based on rates
@@ -198,7 +205,7 @@ function drawRig() {
       if (upgrades[key].owned > 0) {
          innerTemplate = `${upgrades[key].icon}`
          template += `
-         <p>${key}: </p>
+         <p>${key}: ${upgrades[key].owned}</p>
          `
          while (i < upgrades[key].owned) {
             template += innerTemplate
@@ -225,21 +232,21 @@ function drawCoins() {
    for (let key in coins) {
       let coinVal = coins[key].owned * coins[key].marketValue
       coinVal = coinVal.toFixed(2)
-      let riggedOn = ''
-      if (coins[key].rigged) {
-         riggedOn = `<h4 class="bg-danger text-light rounded-sm p-1">ACTIVE</h4>`
+      let rigged = ''
+      if (coins[key] == activeCoin) {
+         rigged = `<h4 class="bg-danger text-light rounded-sm p-1">ACTIVE</h4>`
       } else {
-         riggedOn = `<button class="btn btn-success">MINE</button>`
+         rigged = `<button class="btn btn-success" onclick="clickMine('${key}')">MINE</button>`
       }
       template +=
          `<div class="col-3" id="${coins[key].name}-card">
          <div class="row coin-card justify-content-center text-center p-3">
-            <img class="btn col-12" onclick="clickMine('${key}')" src="${coins[key].img}"></img>
+            <img class="btn col-12" onclick="clickCoin('${key}')" src="${coins[key].img}"></img>
             <h5 class="col-12 text-secondary">Mining Rate: ${coins[key].coinRate}0 per click.</h5>
             <h3 class="col-12" id="${key}-coinval">${coinVal}</h3>
             <h4 class="col-8 text-secondary" id="${key}-count">${coins[key].owned}</h4>
-            <div class="col-4" id="rigged">
-            ${riggedOn}
+            <div class="col-4" id="${key}-rigged">
+            ${rigged}
             </div>
             <div class="col-12">
                <div class="row justify-content-center">

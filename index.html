@@ -5,7 +5,7 @@
    <meta charset="UTF-8">
    <meta http-equiv="X-UA-Compatible" content="IE=edge">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css">
+   <!-- <link rel="stylesheet" href="//cdn.materialdesignicons.com/5.4.55/css/materialdesignicons.min.css"> -->
    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
       integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
    <link rel="stylesheet" href="style.css">
@@ -35,8 +35,8 @@
       <div class="row justify-content-around py-3" id="coins">
          <!-- coin cards -->
       </div>
-      <div class="row justify-content-center">
-         <h1 class="col-9 text-left" id="usd-count">USD: $0</h1>
+      <div class="row justify-content-between bg-primary py-2">
+         <h1 class="col-4 text-left card-header bg-dark text-success" id="usd-count">USD: $0</h1>
          <div class="col-3">
             <div class="row">
                <div class="col-12" id="cpc">
@@ -48,12 +48,12 @@
             </div>
          </div>
       </div>
-      <div class="row justify-content-between">
-         <div class="col-4" id="rig">
+      <div class="row justify-content-around py-1">
+         <div class="col-4 card bg-danger" id="rig">
             <!-- rig icons -->
          </div>
          <div class="col-7">
-            <div class="row justify-content-around" id="upgrades">
+            <div class="row justify-content-around bg-secondary rounded" id="upgrades">
                <!-- upgrade buttons -->
             </div>
          </div>
