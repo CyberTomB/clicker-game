@@ -141,13 +141,17 @@ function updateMarket() {
 function generateUpgradeButtons() {
    for (let key in upgrades) {
       upgrades[key].button =
-         `<div class="col-6 card bg-secondary" id="${key}">
-      <h4>${key}</h4>
-      <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
-      <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
-      <p class="small">${upgrades[key].desc}</p>
-      <button id="${key}-buy" type="button" class="btn btn-info" style="max-width: 40%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
-   </div>`
+         `<div class="col-5 card bg-dark text-light my-2 shadow" id="${key}">
+         <div class="card-header">
+               <h4>${key}</h4>
+               <p>${upgrades[key].desc}</p>
+               </div>
+               <div class="card-body">
+            <h6 class="card-text" id="${key}-price">Price: $${upgrades[key].price}</h6>
+            <p class="text-muted card-text" id="${key}-owned">Owned: ${upgrades[key].owned}</p>
+            <button id="${key}-buy" type="button" class="btn btn-info" style="max-width: 40%;" onclick="clickUpgrade('${key}')" disabled>BUY</button>
+            </div>
+         </div>`
    }
 }
 
