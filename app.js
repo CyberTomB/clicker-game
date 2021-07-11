@@ -109,7 +109,7 @@ function clickUpgrade(item) {
    upgrade.price = upgrade.price.toFixed(2)
    enableUpgrades()
    updateRates(item)
-   drawUpgrade(item)
+   drawUpgradePrices(item)
    drawRig()
    drawRates()
    drawCount()
@@ -141,7 +141,7 @@ function updateMarket() {
 function generateUpgradeButtons() {
    for (let key in upgrades) {
       upgrades[key].button =
-         `<div class="col-12 card bg-secondary" id="${key}">
+         `<div class="col-6 card bg-secondary" id="${key}">
       <h4>${key}</h4>
       <h6 id="${key}-price">Price: $${upgrades[key].price}</h6>
       <h6 id="${key}-owned">Owned: ${upgrades[key].owned}</h6>
@@ -162,17 +162,11 @@ function enableUpgrades() {
 }
 
 function drawUpgradeButtons() {
-   let clickTemplate = ''
-   let autoTemplate = ''
+   let template = ''
    for (let key in upgrades) {
-      if (upgrades[key].auto) {
-         autoTemplate += upgrades[key].button
-      } else {
-         clickTemplate += upgrades[key].button
-      }
-      document.getElementById('click-upgrades').innerHTML = clickTemplate
-      document.getElementById('auto-upgrades').innerHTML = autoTemplate
+      template += upgrades[key].button
    }
+   document.getElementById('upgrades').innerHTML = template
 }
 
 function drawCount() {
@@ -188,7 +182,7 @@ function drawCount() {
    document.getElementById('usd-count').innerText = `USD: $${USD}`
 }
 
-function drawUpgrade(upgrade) {
+function drawUpgradePrices(upgrade) {
    document.getElementById(`${upgrade}-price`).innerText = `Price: $${upgrades[upgrade].price}`
    document.getElementById(`${upgrade}-owned`).innerText = `Owned: ${upgrades[upgrade].owned}`
 }
@@ -241,15 +235,22 @@ function drawCoins() {
             <h3 class="col-12" id="${key}-coinval">${coinVal}</h3>
             <h4 class="col-9" id="${key}-count">${coins[key].owned}</h4>
             ${riggedOn}
-            <button class="btn btn-primary col-3" onclick="sellCoin('${key}',.10)">10%</button>
-            <button class="btn btn-primary col-3" onclick="sellCoin('${key}',.25)">25%</button>
-            <button class="btn btn-primary col-3" onclick="sellCoin('${key}',.50)">50%</button>
-            <button class="btn btn-primary col-3" onclick="sellCoin('${key}', 1)">ALL</button>
+            <div class="col-12">
+               <div class="row justify-content-center">
+                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}',.10)">10%</button>
+                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}',.25)">25%</button>
+                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}',.50)">50%</button>
+                  <button class="btn btn-primary col-2 m-1" onclick="sellCoin('${key}', 1)">ALL</button>
+               </div>
+            </div>
+            <p class="col-12" id="market-${key}">${key}: $0.00</p>
          </div>
       </div>`
 
    }
    document.getElementById('coins').innerHTML = template
+
+   drawMarket()
 }
 
 window.setInterval(autoMine, 1000)
@@ -257,6 +258,5 @@ window.setInterval(updateMarket, 3000)
 generateUpgradeButtons()
 drawUpgradeButtons()
 drawRates()
-drawMarket()
 drawCoins()
 drawRig()
