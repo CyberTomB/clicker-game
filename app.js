@@ -234,7 +234,7 @@ function drawCoins() {
       coinVal = coinVal.toFixed(2)
       let rigged = ''
       if (coins[key] == activeCoin) {
-         rigged = `<h4 class="bg-danger text-light rounded-sm p-1">ACTIVE</h4>`
+         rigged = rigOn
       } else {
          rigged = `<button class="btn btn-success" onclick="clickMine('${key}')">MINE</button>`
       }
